@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Auto Care — Premium Vehicle Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --charcoal: #1a1a1a;
+    --steel: #2c2c2c;
+    --orange: #f4511e;
+    --orange-dim: #c23d16;
+    --cream: #f5f0e8;
+    --muted: #888;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(244,81,30,0.15);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+  .logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 0.85rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta {
+    background: var(--orange); color: var(--white);
+    border: none; padding: 0.6rem 1.5rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--orange-dim); }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(244,81,30,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(244,81,30,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(244,81,30,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 9vw, 9rem);
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  h1 .accent { color: var(--orange); display: block; }
+  .hero-desc {
+    font-size: 1.05rem; line-height: 1.7; color: #aaa;
+    max-width: 440px; margin-bottom: 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange); color: var(--white); border: none;
+    padding: 0.9rem 2.2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--orange-dim); }
+  .btn-ghost {
+    background: transparent; color: var(--cream); border: 1px solid #444;
+    padding: 0.9rem 2.2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; gap: 1rem; align-items: flex-end;
+  }
+  .stat-card {
+    background: var(--charcoal);
+    border: 1px solid var(--steel);
+    border-left: 3px solid var(--orange);
+    padding: 1.4rem 2rem;
+    min-width: 260px;
+    animation: slideIn 0.6s ease forwards;
+    opacity: 0;
+  }
+  .stat-card:nth-child(1) { animation-delay: 0.3s; }
+  .stat-card:nth-child(2) { animation-delay: 0.5s; margin-right: 2.5rem; }
+  .stat-card:nth-child(3) { animation-delay: 0.7s; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--orange); line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
+
+  /* ---- TICKER ---- */
+  .ticker {
+    background: var(--orange);
+    padding: 0.7rem 0;
+    overflow: hidden; white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 28s linear infinite;
+  }
+  .ticker-inner span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.15em; color: var(--white);
+    padding: 0 2rem;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---- SECTIONS ---- */
+  section { padding: 6rem 3rem; }
+  .section-tag {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 0.8rem;
+  }
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    color: var(--white); line-height: 1; margin-bottom: 1rem;
+  }
+  .section-intro { color: #999; max-width: 560px; line-height: 1.7; margin-bottom: 3.5rem; }
+
+  /* ---- SERVICES ---- */
+  #services { background: var(--charcoal); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.5px;
+    background: var(--steel);
+  }
+  .service-card {
+    background: var(--charcoal);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    height: 2px; width: 0; background: var(--orange);
+    transition: width 0.35s;
+  }
+  .service-card:hover { background: #222; }
+  .service-card:hover::after { width: 100%; }
+  .service-icon { font-size: 2rem; margin-bottom: 1.2rem; }
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; color: var(--white); letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+  }
+  .service-card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
+  .service-price { font-size: 0.8rem; color: var(--orange); margin-top: 1.2rem; letter-spacing: 0.1em; }
+
+  /* ---- WHY US ---- */
+  #why { background: var(--black); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .why-list { display: flex; flex-direction: column; gap: 2rem; }
+  .why-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .why-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; line-height: 1; color: var(--steel); flex-shrink: 0;
+  }
+  .why-item h4 { font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 0.4rem; }
+  .why-item p { font-size: 0.88rem; color: #777; line-height: 1.6; }
+  .why-visual {
+    background: var(--charcoal);
+    border: 1px solid var(--steel);
+    padding: 3rem;
+    position: relative;
+  }
+  .why-visual::before {
+    content: ''; position: absolute; top: -1px; left: 2rem; right: 2rem;
+    height: 3px; background: var(--orange);
+  }
+  .review-card { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--steel); }
+  .review-card:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .stars { color: var(--orange); font-size: 0.9rem; margin-bottom: 0.6rem; }
+  .review-text { font-size: 0.9rem; color: #aaa; line-height: 1.6; font-style: italic; margin-bottom: 0.6rem; }
+  .review-author { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ---- PROCESS ---- */
+  #process { background: var(--charcoal); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; position: relative;
+  }
+  .process-steps::before {
+    content: ''; position: absolute;
+    top: 2rem; left: 10%; right: 10%;
+    height: 1px; background: var(--orange); opacity: 0.4;
+    z-index: 0;
+  }
+  .step { text-align: center; padding: 0 1.5rem; position: relative; z-index: 1; }
+  .step-circle {
+    width: 4rem; height: 4rem;
+    background: var(--black); border: 2px solid var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; color: var(--orange);
+  }
+  .step h4 { font-size: 0.95rem; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; }
+  .step p { font-size: 0.82rem; color: #777; line-height: 1.6; }
+
+  /* ---- TEAM ---- */
+  #team { background: var(--black); }
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+  .team-card {
+    background: var(--charcoal); border: 1px solid var(--steel);
+    padding: 2rem 1.5rem; text-align: center;
+    transition: border-color 0.2s;
+  }
+  .team-card:hover { border-color: var(--orange); }
+  .team-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--steel);
+    margin: 0 auto 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    border: 2px solid var(--orange);
+  }
+  .team-card h4 { font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 0.3rem; }
+  .team-card .role { font-size: 0.78rem; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; }
+  .team-card .cert { font-size: 0.8rem; color: #666; margin-top: 0.8rem; line-height: 1.5; }
+
+  /* ---- CONTACT ---- */
+  #contact { background: var(--charcoal); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+  .info-item h4 { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.4rem; }
+  .info-item p { color: #aaa; font-size: 0.92rem; line-height: 1.6; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .contact-form input, .contact-form select, .contact-form textarea {
+    background: var(--steel); border: 1px solid #3a3a3a; color: var(--cream);
+    padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+    border-color: var(--orange);
+  }
+  .contact-form select option { background: var(--charcoal); }
+  .contact-form textarea { resize: vertical; min-height: 110px; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--steel);
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--white); }
+  .footer-logo span { color: var(--orange); }
+  footer p { font-size: 0.8rem; color: var(--muted); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--orange); }
+
+  /* ---- ANIMATIONS ---- */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .why-grid, .contact-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-steps::before { display: none; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">APEX<span>.</span>AUTO</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Baltimore's Premier Auto Care Center</p>
+    <h1>YOUR CAR<span class="accent">DESERVES</span>THE BEST</h1>
+    <p class="hero-desc">From precision oil changes to full engine rebuilds, Apex Auto Care delivers expert vehicle service backed by ASE-certified technicians and a lifetime workmanship guarantee.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Our Services</button>
+      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get an Estimate</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-card">
+      <div class="stat-num">18+</div>
+      <div class="stat-label">Years in Business</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">12K</div>
+      <div class="stat-label">Vehicles Serviced</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4.9★</div>
+      <div class="stat-label">Average Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>OIL CHANGES</span><span>•</span>
+    <span>BRAKE SERVICE</span><span>•</span>
+    <span>ENGINE REPAIR</span><span>•</span>
+    <span>TRANSMISSION</span><span>•</span>
+    <span>TIRE ROTATION</span><span>•</span>
+    <span>AC SERVICE</span><span>•</span>
+    <span>DIAGNOSTICS</span><span>•</span>
+    <span>DETAILING</span><span>•</span>
+    <span>OIL CHANGES</span><span>•</span>
+    <span>BRAKE SERVICE</span><span>•</span>
+    <span>ENGINE REPAIR</span><span>•</span>
+    <span>TRANSMISSION</span><span>•</span>
+    <span>TIRE ROTATION</span><span>•</span>
+    <span>AC SERVICE</span><span>•</span>
+    <span>DIAGNOSTICS</span><span>•</span>
+    <span>DETAILING</span><span>•</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-tag">What We Do</p>
+  <h2>FULL-SPECTRUM<br>AUTO SERVICES</h2>
+  <p class="section-intro">We handle everything from routine maintenance to complex mechanical repairs — all under one roof with transparent pricing and no surprises.</p>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon">🛢️</div>
+      <h3>Oil & Filter Change</h3>
+      <p>Conventional, synthetic blend, or full synthetic oil changes using top-tier brands. Includes multi-point inspection and fluid top-off.</p>
+      <div class="service-price">FROM $39.99</div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">🔧</div>
+      <h3>Brake Service</h3>
+      <p>Complete brake inspections, pad replacements, rotor resurfacing or replacement, and brake fluid flush. Safety first, every time.</p>
+      <div class="service-price">FROM $89.99</div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">⚙️</div>
+      <h3>Engine Diagnostics</h3>
+      <p>State-of-the-art OBD-II scanning and multi-system diagnostics to pinpoint any warning light, misfire, or performance issue fast.</p>
+      <div class="service-price">FROM $49.99</div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">❄️</div>
+      <h3>AC & Heating</h3>
+      <p>Refrigerant recharge, compressor replacement, heater core repair, and full HVAC system diagnostics to keep you comfortable year-round.</p>
+      <div class="service-price">FROM $79.99</div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">🔩</div>
+      <h3>Transmission Service</h3>
+      <p>Fluid flush, filter replacement, and full transmission rebuilds for both automatic and manual transmissions across all makes and models.</p>
+      <div class="service-price">FROM $129.99</div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">🚗</div>
+      <h3>Detailing & Wash</h3>
+      <p>Interior deep clean, exterior hand wash, clay bar treatment, ceramic coating application, and engine bay cleaning packages available.</p>
+      <div class="service-price">FROM $59.99</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-grid">
+    <div>
+      <p class="section-tag">Why Choose Apex</p>
+      <h2>BUILT ON TRUST.<br>DRIVEN BY RESULTS.</h2>
+      <p class="section-intro">We've served the Baltimore area for over 18 years because we do one thing every other shop forgets: treat every vehicle like it's our own.</p>
+      <div class="why-list">
+        <div class="why-item fade-up">
+          <div class="why-num">01</div>
+          <div>
+            <h4>ASE-Certified Technicians</h4>
+            <p>Every mechanic on our floor holds current ASE certification and completes 40+ hours of ongoing training annually.</p>
+          </div>
+        </div>
+        <div class="why-item fade-up">
+          <div class="why-num">02</div>
+          <div>
+            <h4>Transparent, Flat-Rate Pricing</h4>
+            <p>We give you a written estimate before any work begins. No hidden fees, no upsells, no surprises on your final bill.</p>
+          </div>
+        </div>
+        <div class="why-item fade-up">
+          <div class="why-num">03</div>
+          <div>
+            <h4>Lifetime Workmanship Warranty</h4>
+            <p>We stand behind every repair with a lifetime warranty on labor. If something's not right, we'll make it right — at no cost.</p>
+          </div>
+        </div>
+        <div class="why-item fade-up">
+          <div class="why-num">04</div>
+          <div>
+            <h4>Same-Day Service Available</h4>
+            <p>Most routine services are completed the same day. We know your time is valuable — drop off in the morning, pick up by noon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual fade-up">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Apex diagnosed an intermittent electrical issue that two other shops completely missed. Fixed it in under three hours. Absolute professionals."</p>
+        <div class="review-author">— Marcus T., Ford F-150 Owner</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I've been bringing both my cars here for six years. The transparency and honesty here is refreshing — they never try to sell you something you don't need."</p>
+        <div class="review-author">— Sandra R., Toyota Camry Owner</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Transmission replacement done on time, on budget, and with updates throughout the day. Best auto shop in Baltimore, hands down."</p>
+        <div class="review-author">— Derek M., Honda Accord Owner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <p class="section-tag">How It Works</p>
+  <h2>FROM DROP-OFF<br>TO DONE</h2>
+  <p class="section-intro">Our streamlined process means less waiting, more transparency, and a vehicle that leaves in better shape than it arrived.</p>
+  <div class="process-steps">
+    <div class="step fade-up">
+      <div class="step-circle">01</div>
+      <h4>Schedule Online</h4>
+      <p>Book your appointment 24/7 through our online form or call us directly. Same-day slots are often available.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-circle">02</div>
+      <h4>Drop Off & Inspect</h4>
+      <p>We perform a complimentary 35-point inspection on every vehicle at drop-off and document everything with photos.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-circle">03</div>
+      <h4>Approve & Repair</h4>
+      <p>You receive a detailed estimate via text or email. Work begins only after you approve — no surprises, ever.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-circle">04</div>
+      <h4>Pick Up & Drive</h4>
+      <p>We contact you when your vehicle is ready. Pay securely online or in person and drive away with confidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <p class="section-tag">Our Specialists</p>
+  <h2>THE HANDS<br>BEHIND THE WORK</h2>
+  <p class="section-intro">Our team combines decades of experience with a passion for getting it right the first time.</p>
+  <div class="team-grid">
+    <div class="team-card fade-up">
+      <div class="team-avatar">🔧</div>
+      <h4>Ray Callahan</h4>
+      <div class="role">Master Technician</div>
+      <p class="cert">ASE Master Certified · 22 years experience · Engine & Drivetrain Specialist</p>
+    </div>
+    <div class="team-card fade-up">
+      <div class="team-avatar">⚡</div>
+      <h4>Priya Nkosi</h4>
+      <div class="role">Electrical & Diagnostics</div>
+      <p class="cert">ASE L1 Advanced · Hybrid & EV Certified · 14 years experience</p>
+    </div>
+    <div class="team-card fade-up">
+      <div class="team-avatar">🛞</div>
+      <h4>Jake Morales</h4>
+      <div class="role">Suspension & Alignment</div>
+      <p class="cert">ASE Certified · Hunter Alignment Specialist · 11 years experience</p>
+    </div>
+    <div class="team-card fade-up">
+      <div class="team-avatar">❄️</div>
+      <h4>Dana Osei</h4>
+      <div class="role">HVAC & Climate Systems</div>
+      <p class="cert">ASE A7 Certified · EPA 609 Certified · 9 years experience</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-tag">Get In Touch</p>
+  <h2>BOOK YOUR<br>APPOINTMENT</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="info-item">
+        <h4>Location</h4>
+        <p>4812 Harford Road<br>Baltimore, MD 21214</p>
+      </div>
+      <div class="info-item">
+        <h4>Hours</h4>
+        <p>Monday – Friday: 7:00 AM – 6:00 PM<br>Saturday: 8:00 AM – 4:00 PM<br>Sunday: Closed</p>
+      </div>
+      <div class="info-item">
+        <h4>Phone</h4>
+        <p>(410) 555-0192</p>
+      </div>
+      <div class="info-item">
+        <h4>Email</h4>
+        <p>service@apexautocare.com</p>
+      </div>
+      <div class="info-item">
+        <h4>Accepted Vehicles</h4>
+        <p>Domestic, Asian & European makes · Hybrid & EV capable · Fleet accounts welcome</p>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <input type="text" placeholder="First Name" required>
+        <input type="text" placeholder="Last Name" required>
+      </div>
+      <input type="email" placeholder="Email Address" required>
+      <input type="tel" placeholder="Phone Number">
+      <div class="form-row">
+        <input type="text" placeholder="Vehicle Year & Make">
+        <input type="text" placeholder="Model & Trim">
+      </div>
+      <select>
+        <option value="" disabled selected>Select a Service</option>
+        <option>Oil & Filter Change</option>
+        <option>Brake Service</option>
+        <option>Engine Diagnostics</option>
+        <option>AC & Heating</option>
+        <option>Transmission Service</option>
+        <option>Tire Rotation & Balance</option>
+        <option>Detailing</option>
+        <option>Other / Not Sure</option>
+      </select>
+      <textarea placeholder="Describe the issue or any additional notes..."></textarea>
+      <button type="submit" class="btn-primary" style="width:100%;padding:1rem;">Request Appointment</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">APEX<span>.</span>AUTO CARE</div>
+  <p>© 2026 Apex Auto Care. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Careers</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Request Received!';
+    btn.style.background = '#2a7a4b';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
